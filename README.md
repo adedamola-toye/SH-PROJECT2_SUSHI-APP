@@ -1,2 +1,2 @@
-# SH-PROJECT2_SUSHI-APP
- 
+# SH-PROJECT2___SUSHI-FOOD-APP
+ Sushi Food App: Second SideHustle Project for HTML/CSS/JS Track
