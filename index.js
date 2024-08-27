@@ -1,59 +1,55 @@
+const increase = document.getElementsByClassName("plus");
+const decrease = document.getElementsByClassName("minus");
+const total = document.querySelector(".total__value");
 
-var increase = document.getElementsByClassName("plus");
-var decrease = document.getElementsByClassName("minus");
-var total = document.getElementsByClassName("total__value");
+const items = [
+    {food: "Smashed Avo", price: 20},
+    {food: "Yin & Yang", price: 10},
+    {food: "Pancakes", price: 25},
+    {food: "Rancheros (Tofu)", price: 25},
+];
 
-/* console.log(increase);
-console.log(decrease); */
-for(var i = 0; i < increase.length;  i++){
-    var button = increase[i];
-    button.addEventListener('click', function(event){
+function calculateSubtotal() {
+    let subtotal = 0;
+    const quantities = document.getElementsByClassName("no-of-order");
 
-        var buttonClicked = event.target;
-       var noOfOrder = buttonClicked.parentElement.children[3];
-       /* console.log(noOfOrder); */
+    for (let i = 0; i < quantities.length; i++) {
+        const quantity = parseInt(quantities[i].value);
+        subtotal += quantity * items[i].price;
+    }
 
-       var noOfOrderValue =noOfOrder.value;
-       /* console.log(noOfOrderValue); */
-
-       var newValue = parseInt(noOfOrderValue) +1;
-      /*  console.log(noOfOrderNewValue); */
-       noOfOrder.value = newValue;
-       console.log(noOfOrder.value);
-    })
+    total.innerText = `$${subtotal.toFixed(2)}`;
 }
 
-for(var i = 0; i < decrease.length;  i++){
-    var button = decrease[i];
-    button.addEventListener('click', function(event){
+for (let i = 0; i < increase.length; i++) {
+    const button = increase[i];
+    button.addEventListener('click', function (event) {
+        const buttonClicked = event.target;
+        const noOfOrder = buttonClicked.parentElement.children[3];
 
-        var buttonClicked = event.target;
-       var noOfOrder = buttonClicked.parentElement.children[3];
-       /* console.log(noOfOrder); */
+        let noOfOrderValue = parseInt(noOfOrder.value);
+        noOfOrder.value = noOfOrderValue + 1;
+        
+        calculateSubtotal();
+    });
+}
 
-       var noOfOrderValue =noOfOrder.value;
-       /* console.log(noOfOrderValue); */
+for (let i = 0; i < decrease.length; i++) {
+    const button = decrease[i];
+    button.addEventListener('click', function (event) {
+        const buttonClicked = event.target;
+        const noOfOrder = buttonClicked.parentElement.children[3];
 
-       var newValue = parseInt(noOfOrderValue) -1;
-       noOfOrder.value = newValue;
-       console.log(noOfOrder.value);
-    })
+        let noOfOrderValue = parseInt(noOfOrder.value);
+        if (noOfOrderValue > 0) {
+            noOfOrder.value = noOfOrderValue - 1;
+        } else {
+            noOfOrder.value = 0; 
+        }
+        
+        calculateSubtotal();
+    });
 }
 
 
-
-/* const items = [
-    {food:"Smashed Avo", price: 20},
-    {food:"Yin & Yang", price: 10},
-    {food:"Pancakes", price: 25},
-    {food:"Rancheros(Tofu)", price: 25},
-]
-
-let subtotal = 0;
-
-items.forEach(item =>{
-    subtotal=subtotal +(noOfOrder.value* item.price);
-});
-console.log(subtotal)
-
-total.innerHTML=subtotal; */
+calculateSubtotal();
